@@ -1,0 +1,22 @@
+This is a project for the completion of a Masters Program at
+the National College of Ireland.
+The project is a mobile web application that allows for participants
+at conference events (or any kind of event) to find fellow
+participants to collaborate with based on a profile matching
+algorithm.
+Usage. To set up an event goto http://geomingle.appspot.com.
+Enter the location of the event using the google map facility.
+This needs to be accurate as the mobile web app uses the location
+of the user and matches it against the geo location of the event. The
+user can drag and drop the location if the address input is not accurate.
+The application allows the user to printout QR codes with the urls of
+the event and the mobile web app embedded. The application requires the
+user to have a gmail account.
+The mobile application works by going to http://geomingle.appspot.com/geo.
+The application requires the user to have a facebook account. When the
+user is within the vicinity of an event entered by the above process and
+for a relevant date, the user will see the event listed in the application.
+By clicking on the event they are then checked in to the event. They can then
+find fellow participants by clicking on the make contact button. A profile
+matching algorithm will list contacts with relevant profiles. The application then
+allow the participants to make contact via a chatting facility.
