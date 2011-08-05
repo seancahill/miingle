@@ -1,0 +1,28 @@
+application: geomingle
+version: 2
+runtime: python
+api_version: 1
+
+inbound_services:
+- mail
+- xmpp_message
+
+builtins:
+- datastore_admin: on
+
+
+handlers:
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /javascript
+  static_dir: javascript
+
+- url: /images
+  static_dir: images
+
+- url: /checkin/images
+  static_dir: images
+
+- url: /.*
+  script: miingle.py

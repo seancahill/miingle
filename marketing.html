@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+{% block contents %}
+
+<div id='wrapper'>
+    <div id="url_enter">
+        <p>Successfully Added your Event!</p><br/><br/>
+        <p style="font-size: 20px">{{ event }}@<span>{{ location }}</span></p><br/><br/>
+        <p>If you wish to create marketing material for your event enter the URL for your event
+           and press the "Create Marketing Material" button</p>
+        <form accept-charset="UTF-8" action="#" class="cmxform" id="url_form">
+            <span>URL:</span><input id="url_event"  size="40" type="text" placeholder="Event URL" class="required url" />
+            <input id="marketing_button" name="commit" type="submit" value="Create Marketing Material" class="button pink"/>
+        </form>
+    </div>
+    <div id="qr_display">
+        <img id="url_image" src="" />
+        <img height="400" src="http://www.sparqcode.com/qrgen?qt=url&cap=Miingle+on+Mobile&data=http://geomingle.appspot.com/geo" /><br/>
+        <button id="print" class="button pink">Print Marketing Details</button>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+       var validator = $('#url_form').validate(  {
+           submitHandler: function() {
+                var img_url = $('#url_event').val();
+                var img_src = "http://www.sparqcode.com/qrgen?qt=url&cap={{ event }}&subcap={{ location }}&data=" + img_url;
+                $("#url_image").attr("src",encodeURI(img_src));
+                $('#qr_display').css({"visibility":"visible"});
+                $('#url_enter').hide();}} );
+       $('#qr_display').css({"visibility":"hidden"});
+       $("#print").click(function (e) {
+           javascript:window.print();
+       });
+
+    });
+</script>
+{% endblock %}

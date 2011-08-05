@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="stylesheets/mobilebase.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script src="javascript/geolocate.js"></script>
+</head>
+
+<body>
+<div data-role="page" class="leftj" id="first">
+<header>
+    <a href="/geo" rel='external'><img src='images/miingle.png' alt="home"/></a>
+
+    <div data-role="header"  >
+         <a href="#first" data-icon="home" class="ui-btn-left">Home</a>
+         <ul class="ui-btn-right homelist" data-position="inline" >
+           <li><a href="#second" data-role="button" data-icon="about" data-position="inline" >About Us</a></li>
+           <li><a href="#third" data-role="button" data-icon="about" data-position="inline">Contact Us</a></li>
+         </ul>
+        <h1></h1>
+    </div>
+</header>
+<section id="wrapper">
+    <article>
+        <p style="padding: 8px;">Finding your location: <span id="status">checking...</span></p>
+    </article>
+    <div id="found" data-role="content">
+        <ul data-role='listview' data-theme='b'  id='foundlist'></ul>
+    </div>
+</section>
+<div data-role="footer">
+        <h4>Copyright &copy; 2011</h4>
+
+</div> <!-- /footer -->
+</div>
+
+<div data-role="page" id="second">
+    <div data-role="header" data-position="inline" >
+	    <h1>About Us</h1>
+	    <a href="#first" data-icon="home" class="ui-btn-left">Home</a>
+    </div>
+
+    <div data-role="content">
+           <p>This application is an event based social network. It allows users to collaborate
+            at events that they are checked into.</p>
+    </div><!-- /content -->
+</div>
+<div data-role="page" id="third">
+    <div data-role="header">
+            <h1>Contact Us</h1>
+             <a href="#first" data-icon="home" class="ui-btn-left">Home</a>
+    </div><!-- /header -->
+    <div data-role="content">
+           <p>This is a student project for The National College of Ireland</p>
+    </div><!-- /content -->
+</div>
+</body>
+</html>

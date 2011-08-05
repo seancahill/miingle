@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+
+{% block contents %}
+  {% block content %}
+ <div style="margin-left: 160px; float: left; width:460px">
+
+  {% if locations %}
+    <script> var isLocations = true;</script>
+    <div id="select_loc">
+    <h1>My Locations</h1><br/>
+    <P>Select from previous locations or enter new location</P><br/>
+    <select id="select_locations" class="input-text">
+      <option value="0">Select Location</option>
+    {% for loc in locations %}
+
+    <option value="{{ loc.get_str }}">
+      <span class="l_name" >{{ loc.location_name }}</span>
+    </option>
+    {% endfor %}
+   </select>
+   <br/><button id="new_location_button" class="button pink" value="New Location">New Location</button>
+   </div>
+   {% else %}
+     <script> var isLocations = false;</script>
+   {% endif %}
+{% endblock %}
+ <form accept-charset="UTF-8" action="/event" class="new_location cmxform" id="new_location" method="post">
+     <div style="display:inline"><input name="utf8" type="hidden" value="&#x2713;" />
+         <input name="authenticity_token" type="hidden" value="vQOyIO9fCahhiN47xropAfTQz3Csjn/Aic1GlknD99w=" />
+     </div>
+    <!-- our error container -->
+  <div class="error_container">
+	<h4>There are  errors in your form submission, please see below for details.</h4>
+	<ol>
+		<li><label for="location_name" class="error">Please enter the location address</label></li>
+		<li><label for="location_event" class="error">Please enter the event title </label></li>
+		<li><label for="location_date" class="error">Please enter the date of the event (mm/dd/yyyy)</label></li>
+		<li><label for="location_duration" class="error">Please select the duration of the event</label></li>
+		<li><label for="form_geo_lat" class="error">Please locate the address on the map</label></li>
+	</ol>
+  </div>
+  <div class="field" id="locate_address">
+    <label id="label_location_name">Location Address</label>
+    <input id="location_name" name="location_name" size="40" type="text" placeholder="Location address" class="required input-text" minlength="2"/>
+    <button name="locate" id="locate" >Locate</button>
+    <div class="dialog" >
+         <p >Enter your location address as fully as possible. Press "Locate" to locate the address
+             on the map. <br/>Drag and Drop the marker to another location if the initial location is inaccurate.<br/>
+         </p>
+    </div>
+  </div>
+  <div id='event_details'>
+    <div class="field">
+    <label id="label_location_event">Event Title</label>
+    <input id="location_event" name="event_details" size="40" type="text" placeholder="Event Title" class="required input-text" minlength="2"/>
+    </div>
+    <div class="field">
+    <label id="label_location_date">Date (mm/dd/yyyy)</label>
+    <input id="location_date" name="date" size="20" type="text" placeholder="Event Date (mm/dd/yyyy)" class="required date input-text"/>
+
+    <label id="label_location_duration">Duration</label>
+    <input id="location_duration" name="duration" size="4" type="text" placeholder="Days" class=" required digits input-text"/>
+    </div>
+    <div class="geo_fields" >
+    <input id="form_geo_lat" name="lat" type="hidden" />
+    <input id="form_geo_lon" name="lon"  type="hidden" />
+    </div>
+
+   <div class="actions">
+    <input id="location_submit" name="commit" type="submit" class="button pink" value="Save Event" />
+   </div>
+  </div>
+</form>
+</div>
+ <div style="float: left">
+   <div id="map_canvas" style="margin-left: 20px; width: 390px; height: 300px;" class='dialog'>
+   </div>
+   <div style="margin-left: 20px; margin-top: 10px; width: 390px;" class="geo_fields">
+    <span for="geo_lat">lat: </span>
+    <span id="geo_lat" name="lat" size="4" type="text" ></span>
+
+    <span for="geo_lon">long: </span>
+    <span id="geo_lon" name="lon" size="4" type="text" ></span>
+   </div>
+</div>
+
+
+<script>
+    var geocoder;
+    var map;
+    var pts = new Array();
+
+    function initialize() {
+     if (typeof google == undefined) {
+         alert('Google Maps Unavailable, Retry');
+         return;
+     }
+     geocoder = new google.maps.Geocoder();
+     var latlng = new google.maps.LatLng(-34.397, 150.644);
+     var myOptions = {
+      zoom: 8,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+     map = new google.maps.Map(document.getElementById("map_canvas"),
+        myOptions);
+      }
+      function codeAddress(address,ilat,ilon,flat,flon) {
+        geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        map.setCenter(results[0].geometry.location);
+        map.setZoom(15);
+
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            draggable: true
+        });
+         ilat.text(trunc_num(marker.getPosition().lat(),'4'));
+         ilon.text(trunc_num(marker.getPosition().lng(),'4'));
+         flat.val(marker.getPosition().lat());
+         flon.val(marker.getPosition().lng());
+         google.maps.event.addListener(marker, 'dragstart', function() {
+         });
+         google.maps.event.addListener(marker, 'drag', function() {
+         ilat.text(trunc_num(marker.getPosition().lat(),'4'));
+         ilon.text(trunc_num(marker.getPosition().lng(),'4'));
+         });
+         google.maps.event.addListener(marker, 'dragend', function() {
+         ilat.text(trunc_num(marker.getPosition().lat(),'4'));
+         ilon.text(trunc_num(marker.getPosition().lng(),'4'));
+         flat.val(marker.getPosition().lat());
+         flon.val(marker.getPosition().lng());
+         });
+      } else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+  }
+
+   $(document).ready(function () {
+
+
+       var native_support = ('placeholder' in document.createElement('input'));
+       if (native_support) {
+                $("#label_location_name").hide();
+                $("#label_location_event").hide();
+                $("#label_location_date").hide();
+                $("#label_location_duration").hide();
+       }
+       var container = $('div.error_container');
+       // validate the form when it is submitted
+
+       var validator = $("#new_location").validate({
+               errorContainer: container,
+               errorLabelContainer: $("ol", container),
+               wrapper: 'li',
+               meta: "validate"
+           });
+       if ( isLocations) {
+       $('#new_location').css({"visibility":"hidden"});
+        };
+       $('.geo_fields').css({"visibility":"hidden"});
+
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+        document.body.appendChild(script);
+
+       $("#new_location_button").click(function (e) {
+           $('#new_location').css({"visibility":"visible"});
+           $('#event_details').hide();
+           $('#select_loc').hide();
+       });
+
+       $("#locate").click(function (e) {
+            e.preventDefault(); /* prevents form from being submitted */
+            var ikey = $('#location_name').val();
+                
+            var geoloc = codeAddress(ikey,$('#geo_lat'),$('#geo_lon'),$('#form_geo_lat'),$('#form_geo_lon'));
+            $('.geo_fields').css({"visibility":"visible"});
+            $('#event_details').show();
+            });
+
+        $("#select_locations").change(function (e) {
+            e.preventDefault(); /* prevents form from being submitted */
+            var selected = $("#select_locations option:selected");
+            var output = "";
+             if(selected.val() != 0){
+                output = "You Selected " + selected.text();
+                var split_str = selected.val().split('#');
+                var l_name = split_str[0];
+                var g_lat = split_str[1];
+                var g_lon = split_str[2];
+                $('#location_name').val(l_name);
+                $('#geo_lat').text(trunc_num(g_lat,'4'));
+                $('#geo_lon').text(trunc_num(g_lon,'4'));
+                $('#locate').remove();
+                var myLatLng = new google.maps.LatLng(g_lat, g_lon);
+                map.setCenter(myLatLng,15);
+                map.setZoom(15)
+                var marker = new google.maps.Marker({
+                  position: myLatLng,
+                  map: map,
+                  title:"Event Location"
+                });
+                $('#form_geo_lat').val(marker.getPosition().lat());
+                $('#form_geo_lon').val(marker.getPosition().lng());
+                $('.geo_fields').css({"visibility":"visible"});
+                $('#new_location').css({"visibility":"visible"});
+                $('#select_loc').hide();
+             }
+            });
+        });
+  
+
+
+
+</script>
+
+{% endblock %}

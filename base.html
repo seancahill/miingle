@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+    <link rel="stylesheet" href="/stylesheets/print.css" media="print"  />
+    <link href='http://fonts.googleapis.com/css?family=Istok+Web:400,700|Varela|Kameron|Cabin&v2' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/base/jquery-ui.css" type="text/css" media="all" />
+    <script type="text/javascript" src="javascript/NumberFormat154.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+    <script type="text/javascript">
+    function trunc_num( in_num, precision) {
+        var num = new NumberFormat();
+        num.setInputDecimal('.');
+        num.setNumber(in_num); //
+        num.setPlaces(precision, true);
+        num.setCurrencyValue('$');
+        num.setCurrency(false);
+        num.setCurrencyPosition(num.LEFT_OUTSIDE);
+        num.setNegativeFormat(num.LEFT_DASH);
+        num.setNegativeRed(false);
+        num.setSeparators(true, ',', ',');
+        return num.toFormatted();
+
+    }
+    </script>
+
+
+</head>
+<body>
+<div id="header" class="clearfix">
+<div class="fright smallleft" style="margin-right: 20%"> user: {{ userdisplay }}   <a href="{{ url }}">{{ url_linktext }}</a></div>
+<div class="fright smallleft"><a href="/howitworks/" class="button blue"> How it Works</a></div>
+<div class="fright smallleft"><a href="/" class="button blue">Home</a></div>
+
+<div><img class="fleft vlargeleft" src="/images/miingle.png" alt="miingle logo"/></div>
+</div>
+<div style="clear: both"></div>
+{% block contents %}
+
+{% endblock %}
+</body>
+</html>

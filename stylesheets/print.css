@@ -1,0 +1,86 @@
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  font-size:100%;
+  vertical-align:baseline;
+  background:transparent;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display:block;
+}
+
+nav ul { list-style:none; }
+blockquote, q { quotes:none; }
+blockquote:before, blockquote:after,
+q:before, q:after { content:''; content:none; }
+a { margin:0; padding:0; font-size:100%; vertical-align:baseline; background:transparent; }
+ins { background-color:#ff9; color:#000; text-decoration:none; }
+mark { background-color:#ff9; color:#000; font-style:italic; font-weight:bold; }
+del { text-decoration: line-through; }
+abbr[title], dfn[title] { border-bottom:1px dotted; cursor:help; }
+/* tables still need cellspacing="0" in the markup */
+table { border-collapse:collapse; border-spacing:0; }
+hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
+input, select { vertical-align:middle; }
+.clear {clear: both;display: block;overflow: hidden;visibility: hidden;width: 0;height: 0;}
+
+.clearfix:after {clear: both;content: ' ';display: block;font-size: 0;line-height: 0;visibility: hidden;width: 0;height: 0;}
+.clearfix {display: inline-block;}
+* html .clearfix {height: 1%;}.clearfix {display: block;}
+/* END RESET CSS */
+/* These selection declarations have to be separate.
+   No text-shadow: twitter.com/miketaylr/status/12228805301
+   Also: hot pink. */
+::-moz-selection{ background: #3b96a7; color:#fff; text-shadow: none; }
+::selection { background: #3b96a7; color:#fff; text-shadow: none; }
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+body {
+  font: normal 12px/15px "Helvetica Neue", Helvetica, sans-serif;
+  background: rgb(237, 237, 236);
+  margin-top: 10px;
+}
+input.error { border: 1px solid red; }
+
+section, header, footer {
+  display: block;
+}
+.fleft { float: left }
+.fright { float: right }
+.bigleft { margin-left: 40px;}
+.vlargeleft { margin-left: 160px;}
+.smallleft { margin-left: 20px;}
+.toppad { padding-top: 30px;}
+
+div.error_container {
+	background-color: #eee;
+	border: 1px solid red;
+	margin: 5px;
+	padding: 5px;
+}
+
+
+#url_enter p { font: 16px/18px;}
+#url_enter { padding: 15px;}
+#url_form { padding-top: 15px;}
+#url_form input { margin-top: 10px;}
+#qr_display { margin-left: 100px;}
+
+#header { display: none;}
+#print { display: none;}
+
